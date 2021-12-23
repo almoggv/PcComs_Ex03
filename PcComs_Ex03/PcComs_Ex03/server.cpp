@@ -298,7 +298,8 @@ void receiveMessage(int index)
 	}
 
 
-	int bytesRecv = recv(msgSocket, &sockets[index].buffer[len], sizeof(sockets[index].buffer) - len, 0);
+	int bytesRecv = recv(msgSocket, &sockets[index].buffer[0], sizeof(sockets[index].buffer) - len, 0);
+	sockets[index].len = bytesRecv;
 
 	if (SOCKET_ERROR == bytesRecv)
 	{
@@ -319,7 +320,7 @@ void receiveMessage(int index)
 		sockets[index].buffer[len + bytesRecv] = '\0'; //add the null-terminating to make it a string
 		std::cout << "Http Server: Recieved: " << bytesRecv << " bytes of \"\n" << &sockets[index].buffer[len] << "\n\" message.\n"; //logging
 		
-		int method = extractHttpMethod(sockets[index].buffer, sockets[index].len, sockets[index].len);
+		int method = extractHttpMethod(sockets[index].buffer, sockets[index].len, 0);
 
 		
 
@@ -330,7 +331,7 @@ void receiveMessage(int index)
 		{
 			string fileName;
 			string lang;
-			extractHttpFirstVariable((string)(sockets[index].buffer), &fileName, &lang, sockets[index].len);
+			extractHttpFirstVariable((string)(sockets[index].buffer), &fileName, &lang, 0);
 
 			sockets[index].FileName = fileName;
 			if (strcmp(lang.c_str(), "en") == 0 || strcmp(lang.c_str(), "EN") == 0)
@@ -370,14 +371,14 @@ void receiveMessage(int index)
 			break;
 		case POST:
 		{
-			sockets[index].data = extractHttpData((string)sockets[index].buffer , sockets[index].len);
+			sockets[index].data = extractHttpData((string)sockets[index].buffer , 0);
 			sockets[index].send = SEND;
 			sockets[index].sendSubType = POST;
 		}
 			break;
 		case PUT:
 		{
-			extractHttpFirstVariable((string)(sockets[index].buffer), &newFileName, &temp, sockets[index].len);
+			extractHttpFirstVariable((string)(sockets[index].buffer), &newFileName, &temp, 0);
 			sockets[index].FileName = newFileName;
 			sockets[index].data = extractHttpData((string)(sockets[index].buffer), sockets[index].len);
 			sockets[index].send = SEND;
@@ -386,7 +387,7 @@ void receiveMessage(int index)
 			break;
 		case DEL:
 		{
-			extractHttpFirstVariable((string)(sockets[index].buffer), &newFileName, &temp, sockets[index].len);
+			extractHttpFirstVariable((string)(sockets[index].buffer), &newFileName, &temp, 0);
 			sockets[index].FileName = newFileName;
 			sockets[index].data = extractHttpData((string)(sockets[index].buffer), sockets[index].len);
 			sockets[index].send = SEND;
@@ -395,7 +396,7 @@ void receiveMessage(int index)
 			break;
 		case TRACE:
 		{
-			extractHttpFirstVariable((string)(sockets[index].buffer), &newFileName, &temp, sockets[index].len);
+			extractHttpFirstVariable((string)(sockets[index].buffer), &newFileName, &temp, 0);
 			sockets[index].FileName = newFileName;
 			sockets[index].send = SEND;
 			sockets[index].sendSubType = TRACE;
@@ -411,7 +412,7 @@ void receiveMessage(int index)
 			break;
 		}
 	}
-	sockets[index].len += bytesRecv;
+	sockets[index].len = 0;
 	sockets[index].StartTime = clock();
 }
 
@@ -487,7 +488,7 @@ void extractHttpFirstVariable(string source, string* key, string* value, int off
 	int fileEndOfVariables = source.find("HTTP", offset);
 	int fileNameEnd = source.find("=", fileNameStart + offset);										// find file's name end position in request
 
-	if (fileEndOfVariables < fileNameEnd)
+	if (fileEndOfVariables < fileNameEnd || fileNameEnd == string::npos)
 	{
 		// no '=' found in argumnets -> a check a single key
 		int fileNameEnd = source.find(" ", fileNameStart + offset);
