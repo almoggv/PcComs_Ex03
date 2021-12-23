@@ -1,0 +1,14 @@
+﻿  server.cpp
+C:\Dev\GitProjects\PcComs_Ex03\PcComs_Ex03\server.cpp(62,1): warning C4326: return type of 'main' should be 'int' instead of 'void'
+C:\Dev\GitProjects\PcComs_Ex03\PcComs_Ex03\server.cpp(441,22): warning C4129: 'C': unrecognized character escape sequence
+C:\Dev\GitProjects\PcComs_Ex03\PcComs_Ex03\server.cpp(459,22): warning C4477: 'sprintf' : format string '%d' requires an argument of type 'int', but variadic argument 1 has type 'unsigned __int64'
+C:\Dev\GitProjects\PcComs_Ex03\PcComs_Ex03\server.cpp(459,22): message : consider using '%zd' in the format string
+C:\Dev\GitProjects\PcComs_Ex03\PcComs_Ex03\server.cpp(463,22): warning C4129: 'A': unrecognized character escape sequence
+C:\Dev\GitProjects\PcComs_Ex03\PcComs_Ex03\server.cpp(486,46): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Dev\GitProjects\PcComs_Ex03\PcComs_Ex03\server.cpp(487,54): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Dev\GitProjects\PcComs_Ex03\PcComs_Ex03\server.cpp(488,60): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Dev\GitProjects\PcComs_Ex03\PcComs_Ex03\server.cpp(493,61): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Dev\GitProjects\PcComs_Ex03\PcComs_Ex03\server.cpp(501,55): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Dev\GitProjects\PcComs_Ex03\PcComs_Ex03\server.cpp(523,64): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+C:\Dev\GitProjects\PcComs_Ex03\PcComs_Ex03\server.cpp(535,45): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+  PcComs_Ex03.vcxproj -> C:\Dev\GitProjects\PcComs_Ex03\x64\Debug\PcComs_Ex03.exe
